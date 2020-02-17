@@ -13,4 +13,4 @@ for i in range(5):
     else:
         file.readline()
 
-file.close
+file.close()
