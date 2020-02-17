@@ -9,8 +9,8 @@ file.seek(0)
 for i in range(5):
     if i == 0 or i == 3:
         print("Line %d: " %(i+1), file.readline())
-        file.readline()
+        
     else:
         file.readline()
-        
+
 file.close
