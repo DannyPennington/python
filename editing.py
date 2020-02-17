@@ -10,5 +10,5 @@ with open("teams.txt","w") as teams:
 
 # Reading the file line by line
 with open("teams.txt","r") as teams:
-    for i in range(5):
+    for i in range(len(temp)):
         print("Line %d: " %(i+1), teams.readline())
