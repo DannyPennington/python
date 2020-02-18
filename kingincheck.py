@@ -6,8 +6,15 @@ def king_is_in_check(chessboard):
         for x in range(8):
             # Pawn threat:
             if chessboard[y][x] == "♟":
-                threat[y+1][x+1] = 1
-                threat[y+1][x-1] = 1
+                if x == 0:
+                    threat[y+1][x+1] = 1
+                elif x == 7:
+                    threat[y+1][x-1] = 1
+                elif y == 7:
+                    a = 0
+                else:
+                    threat[y+1][x+1] = 1
+                    threat[y+1][x-1] = 1
 
             # Rook threat:
             if chessboard[y][x] == "♜":
@@ -192,7 +199,7 @@ def king_is_in_check(chessboard):
                             y2 += 1
 
             # Queen threat (Combined Rook and Bishop)
-            if chessboard[x][y] == "♛":
+            if chessboard[y][x] == "♛":
                 threat[y][:] = 1
                 threat[0][x] = 1
                 threat[1][x] = 1
@@ -240,11 +247,11 @@ def king_is_in_check(chessboard):
                             y2 += 1
 
             # Get King position
-            if chessboard[x][y] == "♔":
+            if chessboard[y][x] == "♔":
                 kingX = x
                 kingY = y
     # Now the threat board should be set up, just need to compare king position to see if it is in check
-    if threat[kingX,kingY] == 1:
+    if threat[kingY,kingX] == 1:
         return True
     else:
         return False
