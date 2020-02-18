@@ -1,5 +1,3 @@
-import pdb
-
 def array_diff(a, b):
     count = 0
     x = 0
@@ -11,7 +9,7 @@ def array_diff(a, b):
             else:
                 continue
         count +=1
-    if x > 0
-        for i in range(x):
+    for i in range(x):
+        if 0 in a:
             a.remove(0)
     return a
