@@ -152,44 +152,169 @@ def king_is_in_check(chessboard):
                     threat[y-2][x+1] = 1
                     threat[y-1][x+2] = 1
             
-            # Bishop threat:
-            if chessboard[y][x] == "":
-                x =2
+            #Bishop time
+            if chessboard[y][x] == "♝":
+                # Up left threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while x2>0 and y2>0:
+                            threat[y2-1][x2-1] = 1
+                            x2 -= 1
+                            y2 -=1
+                # Up right threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while y2>0 and x2 < 7:
+                            threat[y2-1][x2+1] = 1
+                            x2 += 1
+                            y2 -= 1
+                # Down right threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while y2 < 7 and x2 < 7:
+                            threat[y2+1][x2+1] = 1
+                            x2 += 1
+                            y2 += 1
+                # Down left threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while y2 < 7 and x2 > 0:
+                            threat[y2+1][x2-1] = 1
+                            x2 -= 1
+                            y2 += 1
 
-            # Queen threat
+            # Queen threat (Combined Rook and Bishop)
             if chessboard[x][y] == "♛":
-                threat[x][:] = 1
-                threat[:][y] = 1
+                threat[y][:] = 1
+                threat[0][x] = 1
+                threat[1][x] = 1
+                threat[2][x] = 1
+                threat[3][x] = 1
+                threat[4][x] = 1
+                threat[5][x] = 1
+                threat[6][x] = 1
+                threat[7][x] = 1
+                # Up left threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while x2>0 and y2>0:
+                            threat[y2-1][x2-1] = 1
+                            x2 -= 1
+                            y2 -=1
+                # Up right threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while y2>0 and x2 < 7:
+                            threat[y2-1][x2+1] = 1
+                            x2 += 1
+                            y2 -= 1
+                # Down right threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while y2 < 7 and x2 < 7:
+                            threat[y2+1][x2+1] = 1
+                            x2 += 1
+                            y2 += 1
+                # Down left threat
+                y2 = y
+                x2 = x
+                for i in range(y+1):
+                    for j in range(x+1):
+                        while y2 < 7 and x2 > 0:
+                            threat[y2+1][x2-1] = 1
+                            x2 -= 1
+                            y2 += 1
 
+            # Get King position
+            if chessboard[x][y] == "♔":
+                kingX = x
+                kingY = y
+    # Now the threat board should be set up, just need to compare king position to see if it is in check
+    if threat[kingX,kingY] == 1:
+        return True
+    else:
+        return False
 
+import numpy as np
 chessboard = [
+            [' ',' ','q',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
-            [' ',' ',' ','b',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
-            [' ',' ',' ',' ',' ',' ',' ',' ']]
+            ['K',' ',' ',' ',' ',' ',' ',' ']]
 threat = np.zeros((8,8))
 for y in range(8):
     for x in range(8):
-        #Bishop time
-        if chessboard[y][x] == "b":
+        if chessboard[y][x] == "K":
+                kingX = x
+                kingY = y
+        # Queen threat (Combined Rook and Bishop)
+        if chessboard[y][x] == "q":
+            threat[y][:] = 1
+            threat[0][x] = 1
+            threat[1][x] = 1
+            threat[2][x] = 1
+            threat[3][x] = 1
+            threat[4][x] = 1
+            threat[5][x] = 1
+            threat[6][x] = 1
+            threat[7][x] = 1
             # Up left threat
             y2 = y
-            while y2-1 >= 0:
-                x2 = x
-                while x2-1 >= 0:
-                    threat[y2-1][x2-1] = 1
-                    x2 -= 1
-                y2 -= 1
+            x2 = x
+            for i in range(y+1):
+                for j in range(x+1):
+                    while x2>0 and y2>0:
+                        threat[y2-1][x2-1] = 1
+                        x2 -= 1
+                        y2 -=1
             # Up right threat
-            
-            #while y2-1 >= 0:
-               # while x2-1 >= 0:
-                   # threat[y2-1][x+1] = 1
-                  #  x2 -= 1
-                  #  y2 -= 1
+            y2 = y
+            x2 = x
+            for i in range(y+1):
+                for j in range(x+1):
+                    while y2>0 and x2 < 7:
+                        threat[y2-1][x2+1] = 1
+                        x2 += 1
+                        y2 -= 1
+            # Down right threat
+            y2 = y
+            x2 = x
+            for i in range(y+1):
+                for j in range(x+1):
+                    while y2 < 7 and x2 < 7:
+                        threat[y2+1][x2+1] = 1
+                        x2 += 1
+                        y2 += 1
+            # Down left threat
+            y2 = y
+            x2 = x
+            for i in range(y+1):
+                for j in range(x+1):
+                    while y2 < 7 and x2 > 0:
+                        threat[y2+1][x2-1] = 1
+                        x2 -= 1
+                        y2 += 1
 
 print(threat)
+if threat[kingX,kingY] == 1:
+    print("Check")
+else:
+    print("No check")      
