@@ -1,4 +1,3 @@
-import numpy as np
 def king_is_in_check(chessboard):
     import numpy as np
     threat = np.zeros((8,8))
@@ -17,16 +16,31 @@ def king_is_in_check(chessboard):
                     threat[y+1][x-1] = 1
 
             # Rook threat:
-            if chessboard[y][x] == "♜":
-                threat[y][:] = 1
-                threat[0][x] = 1
-                threat[1][x] = 1
-                threat[2][x] = 1
-                threat[3][x] = 1
-                threat[4][x] = 1
-                threat[5][x] = 1
-                threat[6][x] = 1
-                threat[7][x] = 1
+            if chessboard[y][x] == "r":
+                for i in range(x,8):
+                    # Scan right
+                    if chessboard[y][i] != " " and chessboard[y][i] != "r" and chessboard[y][i] != "K":
+                        break
+                    else:
+                        threat[y][i] = 1
+                for i in range(x,-1,-1):
+                    # Scan left
+                    if chessboard[y][i] != " " and chessboard[y][i] != "r" and chessboard[y][i] != "K":
+                        break
+                    else:
+                        threat[y][i] = 1
+                for i in range(y,8):
+                    # Scan down
+                    if chessboard[i][x] != " " and chessboard[i][x] != "r" and chessboard[i][x] != "K":
+                        break
+                    else:
+                        threat[i][x] = 1
+                for i in range(y,-1,-1):
+                    # Scan up
+                    if chessboard[i][x] != " " and chessboard[i][x] != "r" and chessboard[i][x] != "K":
+                        break
+                    else:
+                        threat[i][x] = 1
             
             # Knight threat:
             if chessboard[y][x] == "♞":
@@ -258,7 +272,7 @@ def king_is_in_check(chessboard):
 
 import numpy as np
 chessboard = [
-            [' ',' ','q',' ',' ',' ',' ',' '],
+            [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
             [' ',' ',' ',' ',' ',' ',' ',' '],
@@ -272,56 +286,35 @@ for y in range(8):
         if chessboard[y][x] == "K":
                 kingX = x
                 kingY = y
-        # Queen threat (Combined Rook and Bishop)
-        if chessboard[y][x] == "q":
-            threat[y][:] = 1
-            threat[0][x] = 1
-            threat[1][x] = 1
-            threat[2][x] = 1
-            threat[3][x] = 1
-            threat[4][x] = 1
-            threat[5][x] = 1
-            threat[6][x] = 1
-            threat[7][x] = 1
-            # Up left threat
-            y2 = y
-            x2 = x
-            for i in range(y+1):
-                for j in range(x+1):
-                    while x2>0 and y2>0:
-                        threat[y2-1][x2-1] = 1
-                        x2 -= 1
-                        y2 -=1
-            # Up right threat
-            y2 = y
-            x2 = x
-            for i in range(y+1):
-                for j in range(x+1):
-                    while y2>0 and x2 < 7:
-                        threat[y2-1][x2+1] = 1
-                        x2 += 1
-                        y2 -= 1
-            # Down right threat
-            y2 = y
-            x2 = x
-            for i in range(y+1):
-                for j in range(x+1):
-                    while y2 < 7 and x2 < 7:
-                        threat[y2+1][x2+1] = 1
-                        x2 += 1
-                        y2 += 1
-            # Down left threat
-            y2 = y
-            x2 = x
-            for i in range(y+1):
-                for j in range(x+1):
-                    while y2 < 7 and x2 > 0:
-                        threat[y2+1][x2-1] = 1
-                        x2 -= 1
-                        y2 += 1
+        # Rook threat:
+        if chessboard[y][x] == "r":
+            for i in range(x,8):
+                # Scan right
+                if chessboard[y][i] != " " and chessboard[y][i] != "r" and chessboard[y][i] != "K":
+                    break
+                else:
+                    threat[y][i] = 1
+            for i in range(x,-1,-1):
+                # Scan left
+                if chessboard[y][i] != " " and chessboard[y][i] != "r" and chessboard[y][i] != "K":
+                    break
+                else:
+                    threat[y][i] = 1
+            for i in range(y,8):
+                # Scan down
+                if chessboard[i][x] != " " and chessboard[i][x] != "r" and chessboard[i][x] != "K":
+                    break
+                else:
+                    threat[i][x] = 1
+            for i in range(y,-1,-1):
+                # Scan up
+                if chessboard[i][x] != " " and chessboard[i][x] != "r" and chessboard[i][x] != "K":
+                    break
+                else:
+                    threat[i][x] = 1
 
 print(threat)
-if threat[kingX,kingY] == 1:
+if threat[kingY,kingX] == 1:
     print("Check")
 else:
     print("No check")      
