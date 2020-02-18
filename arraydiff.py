@@ -13,3 +13,9 @@ def array_diff(a, b):
         if 0 in a:
             a.remove(0)
     return a
+
+def array_diff2(a,b):
+    return [x for x in a if x not in b]
+
+print(array_diff([1,2,3,4,5],[2,5]))
+print(array_diff2([1,2,3,4,5],[2,5]))
