@@ -7,4 +7,11 @@ def getBert(input):
     z = z[::-1]
     return z
 
-print(getBert("jgfjdnberthellotherWbertsksd"))
+
+def getBert2(input):
+    text = input.lower()
+    if text.count("bert") != 2:
+        return ""
+    return ((text.split("bert"))[1])[::-1]
+
+print(getBert2("jgfjdnberthellotherWbertsksd"))
